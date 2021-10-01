@@ -1,0 +1,7 @@
+{
+    
+	// CHANGE THIS TO YOUR INFO BELOW!!!!
+    "cmd": ["C:/Users/brand/AppData/Local/Programs/Python/Python38-32/python.exe", "-u", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python"
+}
