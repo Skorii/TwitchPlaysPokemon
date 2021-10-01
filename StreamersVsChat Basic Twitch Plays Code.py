@@ -4,22 +4,22 @@ from ahk import AHK
 
 #Download Autohotkey at https://www.autohotkey.com/ and provide the address to
 #AutoHotkey.exe below!
-ahk = AHK(executable_path='C:\\path\\to\\AutoHotkey.exe')
+ahk = AHK(executable_path='c:/program files/autohotkey/autohotkey.exe')
 
 SERVER = "irc.twitch.tv"
 PORT = 6667
 
 #Your OAUTH Code Here https://twitchapps.com/tmi/
-PASS = "OAUTH CODE"
+PASS = ""
 
 #What you'd like to name your bot
-BOT = "TwitchBot"
+BOT = "TwitchPlaysPokemon"
 
 #The channel you want to monitor
-CHANNEL = "The Channel"
+CHANNEL = "bigrangr9"
 
 #Your account
-OWNER = "You"
+OWNER = "bigrangr9"
 
 message = ""
 user = ""
@@ -94,8 +94,8 @@ def twitch():
 
 	def loadingComplete(line):
 		if("End of /NAMES list" in line):
-			print("TwitchBot has joined " + CHANNEL + "'s Channel!")
-			sendMessage(irc, "Hello World!")
+			print("TwitchPlaysPokemonBot has joined " + CHANNEL + "'s Channel!")
+			sendMessage(irc, "You Guys Ready!")
 			return False
 		else:
 			return True
