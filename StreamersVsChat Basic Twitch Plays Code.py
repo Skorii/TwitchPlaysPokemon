@@ -1,10 +1,6 @@
 import socket
 import threading
-from ahk import AHK
-
-#Download Autohotkey at https://www.autohotkey.com/ and provide the address to
-#AutoHotkey.exe below!
-ahk = AHK(executable_path='c:/program files/autohotkey/autohotkey.exe')
+import pydirectinput
 
 SERVER = "irc.twitch.tv"
 PORT = 6667
@@ -12,14 +8,16 @@ PORT = 6667
 #Your OAUTH Code Here https://twitchapps.com/tmi/
 PASS = ""
 
+#Channel to monitor (your twitch username)
+CHANNEL = ""
+
+
 #What you'd like to name your bot
 BOT = "TwitchPlaysPokemon"
 
-#The channel you want to monitor
-CHANNEL = "bigrangr9"
-
-#Your account
-OWNER = "bigrangr9"
+#Message sent in the chat to initiate game
+START_MESSAGE = "Jouons ensemble à Pokemon!"
+EXIT_MESSAGE = CHANNEL + " a arrêté le jeu."
 
 message = ""
 user = ""
@@ -37,45 +35,46 @@ def gamecontrol():
 
 	while True:
 
-		if "up" == message.lower():
-			ahk.key_press('up')
+		if "haut" == message.lower():
+			pydirectinput.press('z')
 			message = ""
 
-		if "down" == message.lower():
-			ahk.key_press('down')
+		if "bas" == message.lower():
+			pydirectinput.press('s')
 			message = ""
 
-		if "left" == message.lower():
-			ahk.key_press('left')
+		if "gauche" == message.lower():
+			pydirectinput.press('q')
 			message = ""
 
-		if "right" == message.lower():
-			ahk.key_press('right')
+		if "droite" == message.lower():
+			pydirectinput.press('d')
 			message = ""
 
 		if "a" == message.lower():
-			ahk.key_press('z')
+			pydirectinput.press('a')
 			message = ""
 
 		if "b" == message.lower():
-			ahk.key_press('x')
+			pydirectinput.press('b')
 			message = ""
 
-		if "lb" == message.lower():
-			ahk.key_press('a')
+		if "l" == message.lower():
+			pydirectinput.press('l')
 			message = ""
 
-		if "rb" == message.lower():
-			ahk.key_press('s')
+		if "r" == message.lower():
+			pydirectinput.press('r')
 			message = ""
 
 		if "select" == message.lower():
-			ahk.key_press('d')
+			pydirectinput.press('y')
 			message = ""
 
 		if "start" == message.lower():
-			ahk.key_press('enter')
+			pydirectinput.press('x')
 			message = ""
+		
 
 def twitch():
 
@@ -94,8 +93,8 @@ def twitch():
 
 	def loadingComplete(line):
 		if("End of /NAMES list" in line):
-			print("TwitchPlaysPokemonBot has joined " + CHANNEL + "'s Channel!")
-			sendMessage(irc, "You Guys Ready!")
+			print(BOT + " has joined " + CHANNEL + "'s Channel!")
+			sendMessage(irc, START_MESSAGE)
 			return False
 		else:
 			return True
@@ -148,6 +147,9 @@ def twitch():
 					user = getUser(line)
 					message = getMessage(line)
 					print(user + " : " + message)
+					if user == CHANNEL and message.lower() == "exit":
+						sendMessage(irc, EXIT_MESSAGE)
+						exit(EXIT_MESSAGE)
 				except Exception:
 					pass
 
@@ -156,5 +158,5 @@ def main():
 		t1 = threading.Thread(target = twitch)
 		t1.start()
 		t2 = threading.Thread(target = gamecontrol)
-		t2. start()
+		t2.start()
 main()
